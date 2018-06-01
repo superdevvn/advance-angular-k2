@@ -1,0 +1,35 @@
+.schedule-tooltip {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    width:260px;
+    background: #ffffff;
+    margin: 0;
+    border-radius: 4px;
+    border: 1px solid #bebebe;
+    box-shadow: 5px -5px 5px #bebebe;
+    font-size:11px;    
+}
+
+    .schedule-tooltip .header {
+        height: 26px;
+        background: #16759B;
+        color: #FFFFFF;
+        line-height:26px;
+        font-size:11px;
+        padding-left:5px;
+        padding-right:5px;
+    }
+
+    .schedule-tooltip .body {
+        padding-top:5px;
+        line-height:20px;
+    }
+
+    .schedule-tooltip .title {
+        color: #16759B;
+    }
+
+    .schedule-tooltip .detail {
+        color: #525252;
+    }

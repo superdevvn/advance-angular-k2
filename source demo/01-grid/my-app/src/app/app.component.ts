@@ -8,21 +8,25 @@ import { IGridOption } from './grid-control/grid-control.model';
 })
 export class AppComponent {
   title = 'app';
-  gridOption: IGridOption;
+  gridOption1: IGridOption;
+  gridOption2: IGridOption;
   constructor(){
-    this.gridOption = {
+    this.gridOption1 = {
       items: [
         {
           firstName: 'Nghia',
-          lastName: 'Tran'
+          lastName: 'Tran',
+          age: 12
         },
         {
           firstName: 'Super',
-          lastName: 'Dev'
+          lastName: 'Dev',
+          age: 26
         },
         {
           firstName: 'Peter',
-          lastName: 'Dark'
+          lastName: 'Dark',
+          age: 58
         }
       ],
       columns:[
@@ -35,8 +39,73 @@ export class AppComponent {
           field: 'lastName',
           title: 'Last Name',
           type: 'string'
+        },
+        {
+          field: 'age',
+          title: 'Age',
+          type: 'number'
         }
       ]
     }
+
+    this.gridOption2 = {
+      items: [
+        {
+          code: '001',
+          name: 'DELL'
+        },
+        {
+          code: '002',
+          name: 'ASUS'
+        },
+        {
+          code: '003',
+          name: 'HP'
+        }
+      ],
+      columns:[
+        {
+          field: 'code',
+          title: 'Mã hàng',
+          type: 'string'
+        },
+        {
+          field: 'name',
+          title: 'Tên hàng',
+          type: 'string'
+        }
+      ]
+    }
+  }
+
+  changeData(){
+    // this.gridOption = {
+    //   items: [
+    //     {
+    //       code: '001',
+    //       name: 'DELL'
+    //     },
+    //     {
+    //       code: '002',
+    //       name: 'ASUS'
+    //     },
+    //     {
+    //       code: '003',
+    //       name: 'HP'
+    //     }
+    //   ],
+    //   columns:[
+    //     {
+    //       field: 'code',
+    //       title: 'Mã hàng',
+    //       type: 'string'
+    //     },
+    //     {
+    //       field: 'name',
+    //       title: 'Tên hàng',
+    //       type: 'string'
+    //     }
+    //   ]
+    // }
   }
 }
