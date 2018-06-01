@@ -1,0 +1,31 @@
+<table class="table table-bordered">
+  <colgroup>
+    <col style="width:80px">
+    <col *ngFor="let column of option.columns" 
+    [ngStyle]="{'width':column.width || ''}">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>
+      </th>
+      <th *ngFor="let column of option.columns">{{column.title}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of option.data">
+      <td>
+        <i *ngFor="let command of option.commands" class="{{command.icon}}" (click)="command.click(item)"></i>
+      </td>
+      <td *ngFor="let column of option.columns">
+        <div *ngIf="column.type == 'string'">{{item[column.field]}}</div>
+        <div *ngIf="column.type == 'number'" style="float:right">{{item[column.field]}}</div>
+        <div *ngIf="column.type == 'date'">{{item[column.field] | date:'dd/MM/yyyy'}}</div>
+        <div *ngIf="column.type == 'datetime'">{{item[column.field] | date:'dd/MM/yyyy HH:mm'}}</div>
+        <div *ngIf="column.type == 'bool'" class="text-center">
+          <span *ngIf="item[column.field]" class="label label-success">{{column.trueValue || item[column.field]}}</span>
+          <span *ngIf="!item[column.field]" class="label label-danger">{{column.falseValue || item[column.field]}}</span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

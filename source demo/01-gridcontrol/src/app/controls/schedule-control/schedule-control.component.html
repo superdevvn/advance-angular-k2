@@ -1,0 +1,15 @@
+<div id="{{controlId}}"></div>
+<div id="{{tooltipId}}" class="schedule-tooltip">
+  <div class="header">
+    {{tooltipInfo.title}}
+    <div class="pull-right">
+      Start: {{tooltipInfo.start}} End: {{tooltipInfo.end}}
+    </div>
+  </div>
+  <div class="body">
+    <div *ngFor="let item of tooltipInfo.items">
+      <span class="title">{{item.title}} </span>
+      <span class="detail">{{item.detail}} </span>
+    </div>
+  </div>
+</div>
