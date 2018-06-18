@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngIf="gridOption.commands && gridOption.commands.length>0">
+        #
+      </th>
+      <th *ngFor="let column of gridOption.columns">{{column.title}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td *ngIf="gridOption.commands && gridOption.commands.length>0">
+        <i *ngFor="let command of gridOption.commands" (click)="command.click(item)" class="{{command.icon}}"></i>
+      </td>
+      <td *ngFor="let column of gridOption.columns">{{item[column.field]}}</td>
+    </tr>
+  </tbody>
+</table>

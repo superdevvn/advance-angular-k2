@@ -1,0 +1,14 @@
+<div class="modal fade" #modal>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header {{type}}">
+                <label class="modal-title">{{title}}</label>
+                <button type="button" class="close" (click)="close()">&times;</button>
+            </div>
+
+            <!-- Modal body & footer-->
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

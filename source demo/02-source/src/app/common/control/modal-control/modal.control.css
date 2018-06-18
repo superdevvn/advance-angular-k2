@@ -1,0 +1,38 @@
+.modal-content {
+    border-radius: .5rem;
+}
+
+.modal-header {
+    padding: .5rem;
+    color: #4C6A84;
+}
+
+.modal-header.primary {
+    color: #fff;
+    background-color: #428bca;
+}
+
+.modal-header.info {
+    color: #fff;
+    background-color: #5bc0de;
+}
+
+.modal-header.success {
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.modal-header.warning {
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.modal-header.danger {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.modal-header .modal-title {
+    font-weight: 500;
+    text-transform: uppercase;
+}

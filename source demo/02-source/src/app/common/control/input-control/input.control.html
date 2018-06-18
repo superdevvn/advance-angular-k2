@@ -1,0 +1,7 @@
+<mat-form-field style="width:100%">
+    <input #formModel="ngModel" [name]="name" matInput placeholder="{{label}}" [ngModel]="_model" (ngModelChange)="change($event)" [required]="required" [disabled]="disabled">
+    <mat-error *ngIf="form && formModel.invalid && formModel.errors.required">
+        This field is
+        <strong>required</strong>
+    </mat-error>
+</mat-form-field>

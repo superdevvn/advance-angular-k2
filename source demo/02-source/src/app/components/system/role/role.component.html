@@ -1,0 +1,38 @@
+<section class="content-header">
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-sm btn-primary pull-right" (click)="detail()">New</button>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <grid-control [option]="gridOption" #grid></grid-control>
+      </div>
+    </div>
+  </section>
+  <modal-control [title]="entity.Id?'Chỉnh sửa vai trò':'Tạo mới vai trò'" #modal>
+    <modal-body>
+      <div class="row">
+        <div class="col-sm-6">
+          <span class="eml-label">Mã vai trò</span>
+          <input class="form-control" [(ngModel)]="entity.Code">
+        </div>
+        <div class="col-sm-6">
+          <span class="eml-label">Tên vai trò</span>
+          <input class="form-control" [(ngModel)]="entity.Name">
+        </div>
+        <div class="col-sm-12">
+          <span class="eml-label">Ghi chú</span>
+          <textarea class="form-control" [(ngModel)]="entity.Description"></textarea>
+        </div>
+      </div>
+    </modal-body>
+    <modal-footer>
+      <button class="btn btn-primary btn-sm" (click)="save()">
+        <i class="fa fa-floppy-o"></i> Save</button>
+      <button class="btn btn-secondary btn-sm" (click)="modal.close()">
+        <i class="fa fa-times"></i> Cancel</button>
+    </modal-footer>
+  </modal-control>

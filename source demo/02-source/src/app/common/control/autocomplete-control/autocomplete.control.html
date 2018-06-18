@@ -1,0 +1,8 @@
+<mat-form-field style="width:100%">
+    <input #formModel="ngModel" [ngModel]="_model" (ngModelChange)="change($event)" [name]="name" placeholder="{{label}}" matInput [matAutocomplete]="auto" [required]="required" [disabled]="disabled">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+            {{item.display}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
