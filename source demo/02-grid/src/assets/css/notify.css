@@ -1,0 +1,31 @@
+/* Notify Service CSS */
+.notify-info, .notify-success, .notify-warning, .notify-error {
+    border-radius: 5px;
+    margin: 0;
+    padding:12px;
+    z-index: 99999;
+    top:5px;
+    right: 5px;
+    display: none;
+    position: fixed;
+  }
+  .notify-info {
+      color: #00529B;
+      background-color: #BDE5F8;
+  }
+  .notify-success {
+      color: #4F8A10;
+      background-color: #DFF2BF;
+  }
+  .notify-warning {
+      color: #9F6000;
+      background-color: #FEEFB3;
+  }
+  .notify-error {
+      color: #D8000C;
+      background-color: #FFD2D2;
+  }
+  .notify-info i, .notify-success i, .notify-warning i, .notify-error i {
+      font-size:2em;
+      vertical-align:middle;
+  }
