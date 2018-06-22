@@ -1,0 +1,14 @@
+<form #form="ngForm" class="row mr-0 ml-0">
+  <div class="col-md-4">
+    <span>First Name</span>
+    <input class="form-control">
+  </div>
+  <div class="col-md-4">
+    <span>Last Name</span>
+    <input class="form-control">
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-12">
+    <button type="button" class="btn btn-primary" [disabled]="form.pristine">Save</button>
+  </div>
+</form>
