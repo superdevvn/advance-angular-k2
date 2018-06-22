@@ -1,14 +1,34 @@
-<form #form="ngForm" class="row mr-0 ml-0">
+<form #form="ngForm" (ngSubmit)="save()" class="row mr-0 ml-0">
   <div class="col-md-4">
     <span>First Name</span>
-    <input class="form-control">
+    <input class="form-control" name="firstName" [(ngModel)]="firstName">
   </div>
   <div class="col-md-4">
-    <span>Last Name</span>
-    <input class="form-control">
+    <span>Last Name </span><span *ngIf="isRequired" class="text-danger">*</span>
+    <input class="form-control" name="lastName" [(ngModel)]="lastName" [required]="isRequired" [minlength]="2">
+    <span class="text-danger" 
+    *ngIf="form && form.controls['lastName'] && form.controls['lastName'].invalid && form.controls['lastName'].errors.required">Required</span>
+    <span class="text-danger" 
+    *ngIf="form && form.controls['lastName'] && form.controls['lastName'].invalid && form.controls['lastName'].errors.minlength">Minlength</span>
+  </div>
+  <div class="col-md-4">
+    <span>Required</span>
+    <input type="checkbox" class="form-control" name="isRequired" [(ngModel)]="isRequired">
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-4">
+    <span>Combobox</span>
+    <select class="form-control" name="comboBox" [(ngModel)]="comboBox" [required]="true">
+      <option value="">Not select</option>
+      <option value="1">Select 1</option>
+      <option value="2">Select 2</option>
+      <option value="3">Select 3</option>
+      <option value="4">Select 4</option>
+    </select>
   </div>
   <div class="clearfix"></div>
   <div class="col-md-12">
-    <button type="button" class="btn btn-primary" [disabled]="form.pristine">Save</button>
+    <button class="btn btn-primary" 
+    [disabled]="form.pristine || form.invalid">Save</button>
   </div>
 </form>
