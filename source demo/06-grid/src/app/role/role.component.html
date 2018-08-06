@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fa fa-table"></i> Bordered table</h3>
+    Add <i>.table-bordered</i> for borders on all sides of the table and cells. <a target="_blank" href="https://getbootstrap.com/docs/4.0/content/tables/#bordered-table">(more info)</a>
+  </div>
+    
+  <div class="card-body">								
+    
+    <table class="table table-reponsive table-bordered">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>DistrictID</th>
+        <th>DistrictName</th>
+        <th>IsRepresentative</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items;let idx = index" 
+      [ngClass]="{'table-success':item.IsRepresentative, 'table-danger': !item.IsRepresentative}">
+        <th>{{idx+1}}</th>
+        <td>{{item.Code}}</td>
+        <td>{{item.Description}}</td>
+        <td><span class="label" 
+          [ngClass]="{'bg-info':item.IsRepresentative, 'bg-danger': !item.IsRepresentative}">{{item.DistrictID}}</span></td>
+        <td>{{item.DistrictName}}</td>
+        <td>{{item.IsRepresentative}}</td>
+      </tr>
+      </tbody>
+    </table>
+    
+  </div>														
+</div>
