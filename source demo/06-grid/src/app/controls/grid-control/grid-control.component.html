@@ -1,0 +1,146 @@
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive" #table>
+      <table class="table table-bordered table-hover">
+        <colgroup>
+          <col *ngIf="gridOption.editable && gridOption.addable" style="width:50px">
+          <col *ngIf="gridOption.checkable" style="width:50px">
+          <col *ngIf="gridOption.commands && gridOption.commands.length" style="width:50px">
+          <col *ngFor="let column of gridOption.columns" [ngStyle]="{'width':column.width ? column.width : '' }">
+        </colgroup>
+        <thead>
+          <tr>
+            <th rowspan="2" class="align-middle text-center" *ngIf="gridOption.editable" style="min-width:80px">
+              <button *ngIf="gridOption.addable" type="button" class="btn-icon" (click)="addRow()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th rowspan="2" class="align-middle text-center" *ngIf="gridOption.checkable" style="min-width:50px">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="isCheckedAll" (change)="checkAll()">
+                <span class="custom-control-label"></span>
+              </label>
+            </th>
+            <th *ngIf="gridOption.commands && gridOption.commands.length" rowspan="2" [ngStyle]="{'min-width':gridOption.commands && gridOption.commands.length ? gridOption.commands.length*26 + 10 + 'px' : '80px' }">
+            </th>
+            <th rowspan="2" *ngFor="let column of gridOption.columns" [ngStyle]="{'min-width':column.width ? column.width : '100px'}">
+              <span class="cursor-pointer" (click)="sort(column.field)">
+                {{column.title}}
+                <i *ngIf="orderBy == column.field && orderDirection == 'ASC'" class="fa fa-angle-up"></i>
+                <i *ngIf="orderBy == column.field && orderDirection == 'DESC'" class="fa fa-angle-down"></i>
+              </span>
+              <input *ngIf="column.type === 'string' || column.type === 'number'" type="text" class="form-control form-control-sm" [(ngModel)]="filter[column.field]"
+                (keyup.enter)="reload()">
+              <select *ngIf="column.type === 'bool'" class="form-control form-control-sm" [(ngModel)]="filter[column.field]" (change)="reload()">
+                <option value="">All</option>
+                <option value="1">{{column.trueValue || 'true'}}</option>
+                <option value="0">{{column.falseValue || 'false'}}</option>
+              </select>
+              <select class="form-control form-control-sm" *ngIf="column.type == 'values'" [(ngModel)]="filter[column.field]" (change)="reload()">
+                <option value="">All</option>
+                <option *ngFor="let data of column.values" [value]="data.value">{{data.text}}</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items" [ngClass]="{'cursor-pointer': gridOption.onSelectRow}" (click)="selectRow(item)">
+            <!-- <td *ngIf="gridOption.editable" class="align-middle text-center">
+                  <button *ngIf="!item.isEditing" type="button" class="btn-icon" matTooltip="Edit" (click)="editRow(item)">
+                    <i class="fa fa-pencil text-primary" aria-hidden="true"></i>
+                  </button>
+                  <button *ngIf="item.isEditing" type="button" class="btn-icon" matTooltip="Save" (click)="saveRow(item)">
+                    <i class="fa fa-floppy-o text-success" aria-hidden="true"></i>
+                  </button>
+                  <button *ngIf="item.isEditing" type="button" class="btn-icon" matTooltip="Cancel" (click)="cancelRow(item)">
+                    <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                  </button>
+                </td> -->
+            <td class="align-middle text-center" *ngIf="gridOption.checkable">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.isChecked" (change)="check(item)">
+                <span class="custom-control-label"></span>
+              </label>
+            </td>
+            <td *ngIf="gridOption.commands && gridOption.commands.length" class="align-middle text-center">
+              <div class="row mr-0 ml-0">
+                <button *ngFor="let command of gridOption.commands" type="button" class="btn-icon" (click)="command.click(item)" [disabled]="commandHandler.disalbed(command,item)">
+                  <i class="{{commandHandler.icon(command,item)}}" aria-hidden="true"></i>
+                </button>
+              </div>
+            </td>
+            <td *ngFor="let column of gridOption.columns" class="align-middle">
+              <div *ngIf="column.type === 'string'">
+                <div *ngIf="item.isEditing">
+                  <input *ngIf="column.type === 'string' || column.type === 'number'" type="text" class="form-control input-sm my-1" [(ngModel)]="item[column.field]"
+                    (keyup.enter)="reload()">
+                </div>
+                <div *ngIf="!item.isEditing">
+                  {{item[column.field]}}
+                </div>
+              </div>
+              <div *ngIf="column.type === 'number'" class="pull-right">{{item[column.field] | number}}</div>
+              <div *ngIf="column.type === 'date'">{{item[column.field] | date:'dd/MM/yyyy'}}</div>
+              <div *ngIf="column.type === 'datetime'">{{item[column.field] | date:'dd/MM/yyyy HH:mm'}}</div>
+              <div *ngIf="column.type === 'time'">{{item[column.field] | date:'HH:mm'}}</div>
+              <div *ngIf="column.type === 'bool'" class="text-center">
+                <span *ngIf="item[column.field]" class="label label-success">{{column.trueValue || item[column.field]}}</span>
+                <span *ngIf="!item[column.field]" class="label label-danger">{{column.falseValue || item[column.field]}}</span>
+              </div>
+              <div *ngIf="column.type == 'values'">
+                <div *ngFor="let data of column.values">
+                  <div *ngIf="data.value == item[column.field]" [ngStyle]="{'background-color':data.backgroundColor}" class="status">
+                    {{data.text}}
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /.box-body -->
+  <div class="col-md-12 mb-2">
+    <button *ngIf="gridOption.key" class="btn btn-primary btn-sm" (click)="openModalConfig()">
+      <i class="fa fa-cogs fa-fw"></i>
+    </button>
+    <button *ngIf="gridOption && gridOption.onImportExcel" class="btn btn-success btn-sm" (click)="importExcel()">
+      <i class="fa fa-upload fa-fw"></i>
+    </button>
+    <button class="btn btn-success btn-sm" (click)="exportExcel()">
+      <i class="fa fa-download fa-fw"></i>
+    </button>
+    <ul class="pagination pagination-sm pull-right">
+      <li class="page-item" [ngClass]="{'disabled':currentPage === 1}" (click)="selectPage(1)">
+        <a class="page-link">
+          <i class="fa fa-angle-double-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{'disabled':currentPage === 1}" (click)="selectPage(currentPage-1)">
+        <a class="page-link">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{'active':page === currentPage}" *ngFor="let page of pages" (click)="selectPage(page)">
+        <a class="page-link">{{page}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{'disabled':currentPage === totalPage}" (click)="selectPage(currentPage+1)">
+        <a class="page-link">
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{'disabled':currentPage === totalPage}" (click)="selectPage(totalPage)">
+        <a class="page-link">
+          <i class="fa fa-angle-double-right"></i>
+        </a>
+      </li>
+    </ul>
+    <span class="pull-right" style="font-weight: 600;margin: 5px;">/ {{total}}</span>
+    <div class="pull-right">
+      <select class="form-control form-control-sm" [(ngModel)]="pageSize" (change)="reload()">
+        <option *ngFor="let numberOfPage of numberOfPages" [value]="numberOfPage">{{numberOfPage}}</option>
+      </select>
+    </div>
+  </div>
+</div>

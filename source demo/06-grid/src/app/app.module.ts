@@ -11,6 +11,9 @@ import { RoleComponent } from './role/role.component';
 import { UserComponent } from './user/user.component';
 import { UtilityService } from './services/utility.service';
 import { ApiService } from './services/api.service';
+import { GridControlComponent } from './controls/grid-control/grid-control.component';
+import { DatePipe } from '../../node_modules/@angular/common';
+import { GridService } from './controls/grid-control/grid.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -26,6 +29,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    GridControlComponent,
     AppComponent,
     MainComponent,
     LoginComponent,
@@ -38,7 +42,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [UtilityService, ApiService],
+  providers: [DatePipe, GridService, UtilityService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
