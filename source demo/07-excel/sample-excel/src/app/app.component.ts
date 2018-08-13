@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExcelService } from './excel.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  constructor(private excelService: ExcelService){
+
+  }
+
+  import(){
+    this.excelService.import().then(items=>{
+      console.log(items);
+    });
+  }
 }
