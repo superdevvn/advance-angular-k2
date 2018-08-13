@@ -8,13 +8,35 @@ import { ExcelService } from './excel.service';
 })
 export class AppComponent {
   title = 'app';
-  constructor(private excelService: ExcelService){
+  constructor(private excelService: ExcelService) {
 
   }
 
-  import(){
-    this.excelService.import().then(items=>{
+  import() {
+    this.excelService.import().then(items => {
       console.log(items);
     });
+  }
+
+  export() {
+    const items = [
+      {
+        Code: 1,
+        Name: 'A'
+      },
+      {
+        Code: 2,
+        Name: 'B'
+      },
+      {
+        Code: 3,
+        Name: 'C'
+      },
+      {
+        Code: 4,
+        Name: 'D'
+      },
+    ];
+    this.excelService.export(items);
   }
 }

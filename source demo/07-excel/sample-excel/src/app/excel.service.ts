@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
 import * as uuid from 'uuid';
 import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 type AOA = Array<Array<any>>;
 
 @Injectable({
@@ -57,6 +58,33 @@ export class ExcelService {
   }
 
   export(items: any[]): void {
+    /* Worksheet */
+    let worksheet = XLSX.utils.json_to_sheet(items, { cellDates: true });
+    /* Workbook */
+    let workbook = XLSX.utils.book_new();
+    /* Add worksheet to workbook */
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+    /* Set style header */
+    // let firstSheetName = workbook.SheetNames[0];
+    // let firstSheet = workbook.Sheets[firstSheetName];
+    // let cell = firstSheet['A1'];
+    // cell.s = { fill: { fgColor: { rgb: "86BC25" } } };
+    // console.log(cell);
 
+    let wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+    let fileName = this.current() + '.xlsx';
+    saveAs(new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }), fileName);
+  }
+
+  private current(): string {
+    let now = new Date();
+    return (now.getFullYear() + "/" + ("0" + now.getDate()).slice(-2)) + "/" + ("0" + (now.getMonth() + 1)).slice(-2) + " " + (now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+  }
+
+  private s2ab(s): ArrayBuffer {
+    let buffer = new ArrayBuffer(s.length);
+    let view = new Uint8Array(buffer);
+    for (let i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    return buffer;
   }
 }
